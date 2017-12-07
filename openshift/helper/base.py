@@ -18,6 +18,7 @@ from dictdiffer import diff
 from kubernetes import watch
 from kubernetes.client.models import V1DeleteOptions
 from kubernetes.client.rest import ApiException
+from kubernetes.config.config_exception import ConfigException
 from six import add_metaclass
 from urllib3.exceptions import MaxRetryError
 
@@ -48,6 +49,11 @@ class BaseObjectHelper(object):
             self.enable_debug(reset_logfile)
 
         self.set_client_config(**auth)
+
+    @staticmethod
+    @abstractmethod
+    def client_incluster():
+        pass
 
     @staticmethod
     @abstractmethod
@@ -87,6 +93,14 @@ class BaseObjectHelper(object):
     def set_client_config(self, **auth):
         """ Convenience method for updating the configuration object, and instantiating a new client """
         auth_keys = ['api_key', 'ssl_ca_cert', 'cert_file', 'key_file', 'verify_ssl']
+
+        # If no auth options provided, attempt to load in cluster config
+        if not auth:
+            try:
+                self.api_client = self.client_incluster()
+                return
+            except ConfigException:
+                pass
 
         for key in auth_keys + ['kubeconfig', 'context', 'host']:
             # If a key is not defined in auth, check the environment for a K8S_AUTH_ variable.

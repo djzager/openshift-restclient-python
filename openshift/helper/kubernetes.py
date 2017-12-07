@@ -5,6 +5,7 @@ from kubernetes import config
 from kubernetes.client import models as k8s_models
 from kubernetes.client import apis as k8s_apis
 from kubernetes.client import ApiClient, ConfigurationObject
+from kubernetes.config.config_exception import ConfigException
 
 from . import VERSION_RX
 from .base import BaseObjectHelper
@@ -22,6 +23,14 @@ class KubernetesObjectHelper(BaseObjectHelper):
                 return ApiClient(config=ConfigurationObject())
             else:
                 raise
+
+    @staticmethod
+    def client_incluster():
+        try:
+            config.load_incluster_config()
+            return ApiClient(config)
+        except ConfigException:
+            raise
 
     @classmethod
     def available_apis(cls):

@@ -3,9 +3,11 @@ from __future__ import absolute_import
 
 import json
 
+from kubernetes import config as kconfig
 from kubernetes.client import models as k8s_models
 from kubernetes.client import apis as k8s_apis
 from kubernetes.client.rest import ApiException
+from kubernetes.config.config_exception import ConfigException
 from urllib3.exceptions import MaxRetryError
 
 from . import VERSION_RX
@@ -28,6 +30,14 @@ class OpenShiftObjectHelper(BaseObjectHelper):
                 return ApiClient(config=ConfigurationObject())
             else:
                 raise
+
+    @staticmethod
+    def client_incluster():
+        try:
+            kconfig.load_incluster_config()
+            return ApiClient(config=config)
+        except ConfigException:
+            raise
 
     @classmethod
     def available_apis(cls):
