@@ -96,10 +96,10 @@ def remove_watch_operations(op, parent, operation_ids):
 
 def strip_tags_from_operation_id(operation, _):
     operation_id = operation['operationId']
-    for t in operation['tags']:
-        operation_id = operation_id.replace(_to_camel_case(t), '')
-    operation['operationId'] = operation_id
-
+    if 'tags' in operation:
+        for t in operation['tags']:
+            operation_id = operation_id.replace(_to_camel_case(t), '')
+        operation['operationId'] = operation_id
 
 def add_custom_objects_spec(spec):
     with open(CUSTOM_OBJECTS_SPEC_PATH, 'r') as custom_objects_spec_file:
@@ -110,7 +110,7 @@ def add_custom_objects_spec(spec):
     return spec
 
 
-def process_swagger(spec):
+def process_swagger(spec, client_language):
     spec = add_custom_objects_spec(spec)
 
     apply_func_to_spec_operations(spec, strip_tags_from_operation_id)
@@ -123,14 +123,21 @@ def process_swagger(spec):
         apply_func_to_spec_operations(
             spec, remove_watch_operations, operation_ids)
     except PreprocessingException as e:
-        print(e.message)
+        print(e)
 
     remove_model_prefixes(spec, 'io.k8s')
 
-    inline_primitive_models(spec)
+    inline_primitive_models(spec, preserved_primitives_for_language(client_language))
 
     return spec
 
+def preserved_primitives_for_language(client_language):
+    if client_language == "java":
+        return ["intstr.IntOrString", "resource.Quantity"]
+    elif client_language == "csharp":
+        return ["intstr.IntOrString", "resource.Quantity"]
+    else:
+        return []
 
 def rename_model(spec, old_name, new_name):
     if new_name in spec['definitions']:
@@ -180,7 +187,7 @@ def remove_deprecated_models(spec):
     models = {}
     for k, v in spec['definitions'].items():
         if is_model_deprecated(v):
-            print("Removing deprecated model %s" %k)
+            print("Removing deprecated model %s" % k)
         else:
             models[k] = v
     spec['definitions'] = models
@@ -252,28 +259,38 @@ def find_replace_ref_recursive(root, ref_name, replace_map):
             find_replace_ref_recursive(v, ref_name, replace_map)
 
 
-def inline_primitive_models(spec):
+def inline_primitive_models(spec, excluded_primitives):
     to_remove_models = []
     for k, v in spec['definitions'].items():
+        if k in excluded_primitives:
+            continue
         if "properties" not in v:
-            print("Making primitive mode `%s` inline ..." % k)
+            if k == "intstr.IntOrString":
+                v["type"] = "object"
             if "type" not in v:
                 v["type"] = "object"
+            print("Making model `%s` inline as %s..." % (k, v["type"]))
             find_replace_ref_recursive(spec, "#/definitions/" + k, v)
             to_remove_models.append(k)
 
     for k in to_remove_models:
         del spec['definitions'][k]
 
+def write_json(filename, object):
+    with open(filename, 'w') as out:
+        json.dump(object, out, sort_keys=False, indent=2, separators=(',', ': '), ensure_ascii=True)
+
+
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage:\n\n\tpython preprocess_spec.py kuberneres_branch " \
+    if len(sys.argv) != 4:
+        print("Usage:\n\n\tpython preprocess_spec.py client_language kubernetes_branch " \
               "output_spec_path")
         return 1
+    client_language = sys.argv[1]
     spec_url = 'https://raw.githubusercontent.com/kubernetes/kubernetes/' \
-               '%s/api/openapi-spec/swagger.json' % sys.argv[1]
-    output_path = sys.argv[2]
+               '%s/api/openapi-spec/swagger.json' % sys.argv[2]
+    output_path = sys.argv[3]
 
     pool = urllib3.PoolManager()
     with pool.request('GET', spec_url, preload_content=False) as response:
@@ -281,10 +298,9 @@ def main():
             print("Error downloading spec file. Reason: %s" % response.reason)
             return 1
         in_spec = json.load(response, object_pairs_hook=OrderedDict)
-        out_spec = process_swagger(in_spec)
-        with open(output_path, 'w') as out:
-            json.dump(out_spec, out, sort_keys=False, indent=2,
-                      separators=(',', ': '), ensure_ascii=True)
+        write_json(output_path + ".unprocessed", in_spec)
+        out_spec = process_swagger(in_spec, client_language)
+        write_json(output_path, out_spec)
     return 0
 
 
@@ -299,9 +315,7 @@ DEFAULT_CODEGEN_IGNORE_LINES = {
   "setup.py",
   ".travis.yml",
   "tox.ini",
-  "client/api_client.py",
-  "client/configuration.py",
-  "client/rest.py",
+  "config/kube_config.py",
 }
 
 
@@ -333,48 +347,6 @@ def update_codegen_ignore(spec, output_path):
     codegen_ignore_path = os.path.join(os.path.dirname(output_path), '.swagger-codegen-ignore')
     ignore_lines = set()
 
-    k8s_apis = dir(kubernetes.client.apis)
-    k8s_models = dir(kubernetes.client.models)
-
-    api_modules = set()
-    model_modules = set()
-
-    for path in list(spec['paths'].values()):
-        for op_name in list(path.keys()):
-            if op_name != 'parameters':
-                op = path[op_name]
-                for tag in op.get('tags', []):
-                    tag = '_'.join([string_utils.camel_case_to_snake(x) for x in tag.split('_')])
-                    api_modules.add(tag + '_api')
-
-    for model in list(spec['definitions'].keys()):
-        module_name = '_'.join([string_utils.camel_case_to_snake(x) for x in model.split('.')])
-        model_modules.add(module_name)
-
-    for api_module in api_modules:
-        suffix = api_module.split('_')[-1]
-        if suffix in ['0', 'pre012'] or api_module in k8s_apis:
-            ignore_lines.add('client/apis/{}.py'.format(api_module))
-            print("Skipping generation of client/apis/{}.py".format(api_module))
-        else:
-            print("Not skipping generation of client/apis/{}.py".format(api_module))
-
-    for model_module in model_modules:
-        if model_module in k8s_models:
-            ignore_lines.add('client/models/{}.py'.format(model_module))
-            print("Skipping generation of client/models/{}.py".format(model_module))
-        else:
-            print("Not skipping generation of client/models/{}.py".format(model_module))
-
-    for module in list(ignore_lines):
-      module_name = module.split('/')[-1].split('.')[0]
-      test_module_name = 'test_{}'.format(module_name)
-      docs_module_name = "".join(map(lambda x: x.capitalize(), module_name.split('_')))
-      ignore_lines.add("test/{}.py".format(test_module_name))
-      ignore_lines.add('docs/{}.md'.format(docs_module_name))
-      print("Skipping generation of test/{}.py".format(test_module_name))
-      print("Skipping generation of docs/{}.md".format(docs_module_name))
-
     ignore_lines = ignore_lines.union(DEFAULT_CODEGEN_IGNORE_LINES)
 
     with open(codegen_ignore_path, 'w') as f:
@@ -388,6 +360,17 @@ def process_openshift_swagger(spec, output_path):
     # TODO: Kubernetes does not set a version for OpenAPI spec yet,
     # remove this when that is fixed.
     # spec['info']['version'] = SPEC_VERSION
+
+    return spec
+
+
+def remove_models(spec, pattern):
+    """Remove full package name from OpenAPI model names.
+    """
+    for k, v in spec['definitions'].items():
+        if k.startswith(pattern):
+            print("Deleting {}".format(k))
+            del(spec['definitions'][k])
 
     return spec
 
@@ -428,8 +411,8 @@ def openshift_main():
     pool = urllib3.PoolManager()
     reader = codecs.getreader('utf-8')
     spec_url = 'https://raw.githubusercontent.com/openshift/origin/' \
-               '%s/api/swagger-spec/openshift-openapi-spec.json' % sys.argv[1]
-    output_path = sys.argv[2]
+               '%s/api/swagger-spec/openshift-openapi-spec.json' % sys.argv[2]
+    output_path = sys.argv[3]
     print("writing to {}".format(output_path))
 
     with pool.request('GET', spec_url, preload_content=False) as response:
@@ -437,7 +420,9 @@ def openshift_main():
             print("Error downloading spec file. Reason: %s" % response.reason)
             return 1
         in_spec = json.load(reader(response), object_pairs_hook=OrderedDict)
-        out_spec = process_swagger(process_openshift_swagger(in_spec, output_path))
+        out_spec = process_swagger(
+		process_openshift_swagger(remove_models(in_spec, 'io.k8s'), output_path),
+		sys.argv[1])
         update_codegen_ignore(out_spec, output_path)
         with open(output_path, 'w') as out:
             json.dump(out_spec, out, sort_keys=True, indent=2,
