@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_lifecycle_hook import V1LifecycleHook
 
 
@@ -35,7 +35,9 @@ class TestV1LifecycleHook(unittest.TestCase):
         """
         Test V1LifecycleHook
         """
-        model = openshift.client.models.v1_lifecycle_hook.V1LifecycleHook()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_lifecycle_hook.V1LifecycleHook()
+        pass
 
 
 if __name__ == '__main__':

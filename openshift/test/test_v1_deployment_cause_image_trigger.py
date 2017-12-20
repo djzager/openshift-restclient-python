@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_deployment_cause_image_trigger import V1DeploymentCauseImageTrigger
 
 
@@ -35,7 +35,9 @@ class TestV1DeploymentCauseImageTrigger(unittest.TestCase):
         """
         Test V1DeploymentCauseImageTrigger
         """
-        model = openshift.client.models.v1_deployment_cause_image_trigger.V1DeploymentCauseImageTrigger()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_deployment_cause_image_trigger.V1DeploymentCauseImageTrigger()
+        pass
 
 
 if __name__ == '__main__':

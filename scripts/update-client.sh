@@ -76,18 +76,12 @@ sed -i'' "s,^DEVELOPMENT_STATUS = .*,DEVELOPMENT_STATUS = \\\"${DEVELOPMENT_STAT
 sed -i '${/^$/d;}' "${CLIENT_ROOT}/client/__init__.py"
 sed -i'' "s/^Version:.*/Version:    ${CLIENT_VERSION}/" "${SCRIPT_ROOT}/../python-openshift.spec"
 
-echo "--- Patching to use k8s client-python where possible"
-find "${CLIENT_ROOT}/" -type f -name \*.py -exec sed -i 's/^from \.\+configuration/from kubernetes.client.configuration/g' {} +
-find "${CLIENT_ROOT}/" -type f -name \*.py -exec sed -i 's/^from \.\+rest/from kubernetes.client.rest/g' {} +
-find "${CLIENT_ROOT}/" -type f -name \*.py -exec sed -i "s/^from ${PACKAGE_NAME}.client.rest/from kubernetes.client.rest/g" {} +
-find "${CLIENT_ROOT}/" -type f -name \*.md -exec sed -i "s/^from ${PACKAGE_NAME}.client.rest/from kubernetes.client.rest/g" {} +
-
-
 echo "--- Patching auth_settings"
 find "${CLIENT_ROOT}/client/apis" -type f -name \*.py -exec sed -i "s/auth_settings = \[\]/auth_settings = \['BearerToken'\]/g" {} +
 
 echo "--- Post processing of generated packages"
 python "${SCRIPT_ROOT}/update_generated.py"
 
-
+echo "--- patching client..."
+git apply "${SCRIPT_ROOT}/rest_client_patch.diff"
 echo "---Done."

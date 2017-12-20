@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_pod_security_policy_review_status import V1PodSecurityPolicyReviewStatus
 
 
@@ -35,7 +35,9 @@ class TestV1PodSecurityPolicyReviewStatus(unittest.TestCase):
         """
         Test V1PodSecurityPolicyReviewStatus
         """
-        model = openshift.client.models.v1_pod_security_policy_review_status.V1PodSecurityPolicyReviewStatus()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_pod_security_policy_review_status.V1PodSecurityPolicyReviewStatus()
+        pass
 
 
 if __name__ == '__main__':

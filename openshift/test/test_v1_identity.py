@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_identity import V1Identity
 
 
@@ -35,7 +35,9 @@ class TestV1Identity(unittest.TestCase):
         """
         Test V1Identity
         """
-        model = openshift.client.models.v1_identity.V1Identity()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_identity.V1Identity()
+        pass
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_docker_strategy_options import V1DockerStrategyOptions
 
 
@@ -35,7 +35,9 @@ class TestV1DockerStrategyOptions(unittest.TestCase):
         """
         Test V1DockerStrategyOptions
         """
-        model = openshift.client.models.v1_docker_strategy_options.V1DockerStrategyOptions()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_docker_strategy_options.V1DockerStrategyOptions()
+        pass
 
 
 if __name__ == '__main__':

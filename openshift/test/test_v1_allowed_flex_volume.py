@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_allowed_flex_volume import V1AllowedFlexVolume
 
 
@@ -35,7 +35,9 @@ class TestV1AllowedFlexVolume(unittest.TestCase):
         """
         Test V1AllowedFlexVolume
         """
-        model = openshift.client.models.v1_allowed_flex_volume.V1AllowedFlexVolume()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_allowed_flex_volume.V1AllowedFlexVolume()
+        pass
 
 
 if __name__ == '__main__':

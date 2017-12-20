@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_scope_restriction import V1ScopeRestriction
 
 
@@ -35,7 +35,9 @@ class TestV1ScopeRestriction(unittest.TestCase):
         """
         Test V1ScopeRestriction
         """
-        model = openshift.client.models.v1_scope_restriction.V1ScopeRestriction()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_scope_restriction.V1ScopeRestriction()
+        pass
 
 
 if __name__ == '__main__':

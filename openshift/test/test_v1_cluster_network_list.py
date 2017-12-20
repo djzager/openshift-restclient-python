@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_cluster_network_list import V1ClusterNetworkList
 
 
@@ -35,7 +35,9 @@ class TestV1ClusterNetworkList(unittest.TestCase):
         """
         Test V1ClusterNetworkList
         """
-        model = openshift.client.models.v1_cluster_network_list.V1ClusterNetworkList()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_cluster_network_list.V1ClusterNetworkList()
+        pass
 
 
 if __name__ == '__main__':

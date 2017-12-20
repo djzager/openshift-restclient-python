@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_custom_build_strategy import V1CustomBuildStrategy
 
 
@@ -35,7 +35,9 @@ class TestV1CustomBuildStrategy(unittest.TestCase):
         """
         Test V1CustomBuildStrategy
         """
-        model = openshift.client.models.v1_custom_build_strategy.V1CustomBuildStrategy()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_custom_build_strategy.V1CustomBuildStrategy()
+        pass
 
 
 if __name__ == '__main__':

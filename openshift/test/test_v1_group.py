@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_group import V1Group
 
 
@@ -35,7 +35,9 @@ class TestV1Group(unittest.TestCase):
         """
         Test V1Group
         """
-        model = openshift.client.models.v1_group.V1Group()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_group.V1Group()
+        pass
 
 
 if __name__ == '__main__':

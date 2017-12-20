@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_bitbucket_web_hook_cause import V1BitbucketWebHookCause
 
 
@@ -35,7 +35,9 @@ class TestV1BitbucketWebHookCause(unittest.TestCase):
         """
         Test V1BitbucketWebHookCause
         """
-        model = openshift.client.models.v1_bitbucket_web_hook_cause.V1BitbucketWebHookCause()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_bitbucket_web_hook_cause.V1BitbucketWebHookCause()
+        pass
 
 
 if __name__ == '__main__':

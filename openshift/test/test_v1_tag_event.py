@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_tag_event import V1TagEvent
 
 
@@ -35,7 +35,9 @@ class TestV1TagEvent(unittest.TestCase):
         """
         Test V1TagEvent
         """
-        model = openshift.client.models.v1_tag_event.V1TagEvent()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_tag_event.V1TagEvent()
+        pass
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_source_path import V1ImageSourcePath
 
 
@@ -35,7 +35,9 @@ class TestV1ImageSourcePath(unittest.TestCase):
         """
         Test V1ImageSourcePath
         """
-        model = openshift.client.models.v1_image_source_path.V1ImageSourcePath()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_source_path.V1ImageSourcePath()
+        pass
 
 
 if __name__ == '__main__':

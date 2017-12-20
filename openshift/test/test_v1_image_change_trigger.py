@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_change_trigger import V1ImageChangeTrigger
 
 
@@ -35,7 +35,9 @@ class TestV1ImageChangeTrigger(unittest.TestCase):
         """
         Test V1ImageChangeTrigger
         """
-        model = openshift.client.models.v1_image_change_trigger.V1ImageChangeTrigger()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_change_trigger.V1ImageChangeTrigger()
+        pass
 
 
 if __name__ == '__main__':

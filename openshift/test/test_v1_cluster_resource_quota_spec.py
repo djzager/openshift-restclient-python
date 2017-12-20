@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_cluster_resource_quota_spec import V1ClusterResourceQuotaSpec
 
 
@@ -35,7 +35,9 @@ class TestV1ClusterResourceQuotaSpec(unittest.TestCase):
         """
         Test V1ClusterResourceQuotaSpec
         """
-        model = openshift.client.models.v1_cluster_resource_quota_spec.V1ClusterResourceQuotaSpec()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_cluster_resource_quota_spec.V1ClusterResourceQuotaSpec()
+        pass
 
 
 if __name__ == '__main__':

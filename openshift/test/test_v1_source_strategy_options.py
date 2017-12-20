@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_source_strategy_options import V1SourceStrategyOptions
 
 
@@ -35,7 +35,9 @@ class TestV1SourceStrategyOptions(unittest.TestCase):
         """
         Test V1SourceStrategyOptions
         """
-        model = openshift.client.models.v1_source_strategy_options.V1SourceStrategyOptions()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_source_strategy_options.V1SourceStrategyOptions()
+        pass
 
 
 if __name__ == '__main__':

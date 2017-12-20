@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_git_source_revision import V1GitSourceRevision
 
 
@@ -35,7 +35,9 @@ class TestV1GitSourceRevision(unittest.TestCase):
         """
         Test V1GitSourceRevision
         """
-        model = openshift.client.models.v1_git_source_revision.V1GitSourceRevision()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_git_source_revision.V1GitSourceRevision()
+        pass
 
 
 if __name__ == '__main__':

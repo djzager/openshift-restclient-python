@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_fs_group_strategy_options import V1FSGroupStrategyOptions
 
 
@@ -35,7 +35,9 @@ class TestV1FSGroupStrategyOptions(unittest.TestCase):
         """
         Test V1FSGroupStrategyOptions
         """
-        model = openshift.client.models.v1_fs_group_strategy_options.V1FSGroupStrategyOptions()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_fs_group_strategy_options.V1FSGroupStrategyOptions()
+        pass
 
 
 if __name__ == '__main__':

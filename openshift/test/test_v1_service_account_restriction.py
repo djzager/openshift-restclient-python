@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_service_account_restriction import V1ServiceAccountRestriction
 
 
@@ -35,7 +35,9 @@ class TestV1ServiceAccountRestriction(unittest.TestCase):
         """
         Test V1ServiceAccountRestriction
         """
-        model = openshift.client.models.v1_service_account_restriction.V1ServiceAccountRestriction()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_service_account_restriction.V1ServiceAccountRestriction()
+        pass
 
 
 if __name__ == '__main__':

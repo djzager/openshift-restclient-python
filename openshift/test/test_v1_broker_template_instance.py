@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_broker_template_instance import V1BrokerTemplateInstance
 
 
@@ -35,7 +35,9 @@ class TestV1BrokerTemplateInstance(unittest.TestCase):
         """
         Test V1BrokerTemplateInstance
         """
-        model = openshift.client.models.v1_broker_template_instance.V1BrokerTemplateInstance()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_broker_template_instance.V1BrokerTemplateInstance()
+        pass
 
 
 if __name__ == '__main__':

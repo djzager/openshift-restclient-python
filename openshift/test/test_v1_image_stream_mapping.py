@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_stream_mapping import V1ImageStreamMapping
 
 
@@ -35,7 +35,9 @@ class TestV1ImageStreamMapping(unittest.TestCase):
         """
         Test V1ImageStreamMapping
         """
-        model = openshift.client.models.v1_image_stream_mapping.V1ImageStreamMapping()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_stream_mapping.V1ImageStreamMapping()
+        pass
 
 
 if __name__ == '__main__':

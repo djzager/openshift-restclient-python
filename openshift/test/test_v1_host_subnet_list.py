@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_host_subnet_list import V1HostSubnetList
 
 
@@ -35,7 +35,9 @@ class TestV1HostSubnetList(unittest.TestCase):
         """
         Test V1HostSubnetList
         """
-        model = openshift.client.models.v1_host_subnet_list.V1HostSubnetList()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_host_subnet_list.V1HostSubnetList()
+        pass
 
 
 if __name__ == '__main__':

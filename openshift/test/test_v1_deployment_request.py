@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_deployment_request import V1DeploymentRequest
 
 
@@ -35,7 +35,9 @@ class TestV1DeploymentRequest(unittest.TestCase):
         """
         Test V1DeploymentRequest
         """
-        model = openshift.client.models.v1_deployment_request.V1DeploymentRequest()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_deployment_request.V1DeploymentRequest()
+        pass
 
 
 if __name__ == '__main__':

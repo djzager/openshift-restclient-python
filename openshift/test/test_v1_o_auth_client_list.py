@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_o_auth_client_list import V1OAuthClientList
 
 
@@ -35,7 +35,9 @@ class TestV1OAuthClientList(unittest.TestCase):
         """
         Test V1OAuthClientList
         """
-        model = openshift.client.models.v1_o_auth_client_list.V1OAuthClientList()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_o_auth_client_list.V1OAuthClientList()
+        pass
 
 
 if __name__ == '__main__':

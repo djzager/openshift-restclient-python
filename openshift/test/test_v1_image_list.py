@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_list import V1ImageList
 
 
@@ -35,7 +35,9 @@ class TestV1ImageList(unittest.TestCase):
         """
         Test V1ImageList
         """
-        model = openshift.client.models.v1_image_list.V1ImageList()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_list.V1ImageList()
+        pass
 
 
 if __name__ == '__main__':

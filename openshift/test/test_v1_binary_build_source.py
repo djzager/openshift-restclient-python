@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_binary_build_source import V1BinaryBuildSource
 
 
@@ -35,7 +35,9 @@ class TestV1BinaryBuildSource(unittest.TestCase):
         """
         Test V1BinaryBuildSource
         """
-        model = openshift.client.models.v1_binary_build_source.V1BinaryBuildSource()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_binary_build_source.V1BinaryBuildSource()
+        pass
 
 
 if __name__ == '__main__':

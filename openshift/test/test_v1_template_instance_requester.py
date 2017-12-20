@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_template_instance_requester import V1TemplateInstanceRequester
 
 
@@ -35,7 +35,9 @@ class TestV1TemplateInstanceRequester(unittest.TestCase):
         """
         Test V1TemplateInstanceRequester
         """
-        model = openshift.client.models.v1_template_instance_requester.V1TemplateInstanceRequester()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_template_instance_requester.V1TemplateInstanceRequester()
+        pass
 
 
 if __name__ == '__main__':

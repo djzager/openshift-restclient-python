@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_deployment_cause import V1DeploymentCause
 
 
@@ -35,7 +35,9 @@ class TestV1DeploymentCause(unittest.TestCase):
         """
         Test V1DeploymentCause
         """
-        model = openshift.client.models.v1_deployment_cause.V1DeploymentCause()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_deployment_cause.V1DeploymentCause()
+        pass
 
 
 if __name__ == '__main__':

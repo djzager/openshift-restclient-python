@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_stream_tag import V1ImageStreamTag
 
 
@@ -35,7 +35,9 @@ class TestV1ImageStreamTag(unittest.TestCase):
         """
         Test V1ImageStreamTag
         """
-        model = openshift.client.models.v1_image_stream_tag.V1ImageStreamTag()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_stream_tag.V1ImageStreamTag()
+        pass
 
 
 if __name__ == '__main__':

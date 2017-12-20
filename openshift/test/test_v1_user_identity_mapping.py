@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_user_identity_mapping import V1UserIdentityMapping
 
 
@@ -35,7 +35,9 @@ class TestV1UserIdentityMapping(unittest.TestCase):
         """
         Test V1UserIdentityMapping
         """
-        model = openshift.client.models.v1_user_identity_mapping.V1UserIdentityMapping()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_user_identity_mapping.V1UserIdentityMapping()
+        pass
 
 
 if __name__ == '__main__':

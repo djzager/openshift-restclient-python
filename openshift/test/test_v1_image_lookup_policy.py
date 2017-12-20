@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_lookup_policy import V1ImageLookupPolicy
 
 
@@ -35,7 +35,9 @@ class TestV1ImageLookupPolicy(unittest.TestCase):
         """
         Test V1ImageLookupPolicy
         """
-        model = openshift.client.models.v1_image_lookup_policy.V1ImageLookupPolicy()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_lookup_policy.V1ImageLookupPolicy()
+        pass
 
 
 if __name__ == '__main__':

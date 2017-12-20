@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_build_trigger_cause import V1BuildTriggerCause
 
 
@@ -35,7 +35,9 @@ class TestV1BuildTriggerCause(unittest.TestCase):
         """
         Test V1BuildTriggerCause
         """
-        model = openshift.client.models.v1_build_trigger_cause.V1BuildTriggerCause()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_build_trigger_cause.V1BuildTriggerCause()
+        pass
 
 
 if __name__ == '__main__':

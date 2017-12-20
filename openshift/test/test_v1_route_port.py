@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_route_port import V1RoutePort
 
 
@@ -35,7 +35,9 @@ class TestV1RoutePort(unittest.TestCase):
         """
         Test V1RoutePort
         """
-        model = openshift.client.models.v1_route_port.V1RoutePort()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_route_port.V1RoutePort()
+        pass
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_supplemental_groups_strategy_options import V1SupplementalGroupsStrategyOptions
 
 
@@ -35,7 +35,9 @@ class TestV1SupplementalGroupsStrategyOptions(unittest.TestCase):
         """
         Test V1SupplementalGroupsStrategyOptions
         """
-        model = openshift.client.models.v1_supplemental_groups_strategy_options.V1SupplementalGroupsStrategyOptions()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_supplemental_groups_strategy_options.V1SupplementalGroupsStrategyOptions()
+        pass
 
 
 if __name__ == '__main__':

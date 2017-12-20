@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_source_control_user import V1SourceControlUser
 
 
@@ -35,7 +35,9 @@ class TestV1SourceControlUser(unittest.TestCase):
         """
         Test V1SourceControlUser
         """
-        model = openshift.client.models.v1_source_control_user.V1SourceControlUser()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_source_control_user.V1SourceControlUser()
+        pass
 
 
 if __name__ == '__main__':

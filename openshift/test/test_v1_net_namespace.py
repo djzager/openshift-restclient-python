@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_net_namespace import V1NetNamespace
 
 
@@ -35,7 +35,9 @@ class TestV1NetNamespace(unittest.TestCase):
         """
         Test V1NetNamespace
         """
-        model = openshift.client.models.v1_net_namespace.V1NetNamespace()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_net_namespace.V1NetNamespace()
+        pass
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_project_status import V1ProjectStatus
 
 
@@ -35,7 +35,9 @@ class TestV1ProjectStatus(unittest.TestCase):
         """
         Test V1ProjectStatus
         """
-        model = openshift.client.models.v1_project_status.V1ProjectStatus()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_project_status.V1ProjectStatus()
+        pass
 
 
 if __name__ == '__main__':

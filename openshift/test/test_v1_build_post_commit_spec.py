@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_build_post_commit_spec import V1BuildPostCommitSpec
 
 
@@ -35,7 +35,9 @@ class TestV1BuildPostCommitSpec(unittest.TestCase):
         """
         Test V1BuildPostCommitSpec
         """
-        model = openshift.client.models.v1_build_post_commit_spec.V1BuildPostCommitSpec()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_build_post_commit_spec.V1BuildPostCommitSpec()
+        pass
 
 
 if __name__ == '__main__':

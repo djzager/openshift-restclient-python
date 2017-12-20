@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_image_stream_status import V1ImageStreamStatus
 
 
@@ -35,7 +35,9 @@ class TestV1ImageStreamStatus(unittest.TestCase):
         """
         Test V1ImageStreamStatus
         """
-        model = openshift.client.models.v1_image_stream_status.V1ImageStreamStatus()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_image_stream_status.V1ImageStreamStatus()
+        pass
 
 
 if __name__ == '__main__':

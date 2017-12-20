@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_resource_access_review import V1ResourceAccessReview
 
 
@@ -35,7 +35,9 @@ class TestV1ResourceAccessReview(unittest.TestCase):
         """
         Test V1ResourceAccessReview
         """
-        model = openshift.client.models.v1_resource_access_review.V1ResourceAccessReview()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_resource_access_review.V1ResourceAccessReview()
+        pass
 
 
 if __name__ == '__main__':

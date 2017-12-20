@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.models.v1_signature_subject import V1SignatureSubject
 
 
@@ -35,7 +35,9 @@ class TestV1SignatureSubject(unittest.TestCase):
         """
         Test V1SignatureSubject
         """
-        model = openshift.client.models.v1_signature_subject.V1SignatureSubject()
+        # FIXME: construct object with mandatory attributes with example values
+        #model = openshift.client.models.v1_signature_subject.V1SignatureSubject()
+        pass
 
 
 if __name__ == '__main__':

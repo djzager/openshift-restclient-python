@@ -18,7 +18,7 @@ import sys
 import unittest
 
 import openshift.client
-from kubernetes.client.rest import ApiException
+from openshift.client.rest import ApiException
 from openshift.client.apis.image_openshift_io_v1_api import ImageOpenshiftIoV1Api
 
 
