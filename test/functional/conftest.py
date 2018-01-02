@@ -21,6 +21,7 @@ import requests
 from pkg_resources import parse_version
 
 from openshift.client import models
+from openshift.client.rest import ApiException
 from kubernetes.client import V1Namespace, V1ObjectMeta
 from openshift.helper.ansible import KubernetesAnsibleModuleHelper, OpenShiftAnsibleModuleHelper
 
@@ -129,7 +130,7 @@ def ansible_helper(request, auth):
     else:
         helper = OpenShiftAnsibleModuleHelper(api_version, resource, debug=True, reset_logfile=False, **auth)
 
-    helper.api_client.config.debug = True
+    helper.api_client.configuration.debug = True
 
     return helper
 
@@ -207,8 +208,11 @@ def project(auth):
 
     yield name
 
-    helper.delete_object(name, None)
-
+    try:
+        helper.delete_object(name, None)
+    except ApiException as e:
+        if e.status != 404:
+            raise
 
 @pytest.fixture
 def openshift_version():
