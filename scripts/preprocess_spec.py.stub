@@ -9,9 +9,7 @@ DEFAULT_CODEGEN_IGNORE_LINES = {
   "setup.py",
   ".travis.yml",
   "tox.ini",
-  "client/api_client.py",
-  "client/configuration.py",
-  "client/rest.py",
+  "config/kube_config.py",
 }
 
 
@@ -43,48 +41,6 @@ def update_codegen_ignore(spec, output_path):
     codegen_ignore_path = os.path.join(os.path.dirname(output_path), '.swagger-codegen-ignore')
     ignore_lines = set()
 
-    k8s_apis = dir(kubernetes.client.apis)
-    k8s_models = dir(kubernetes.client.models)
-
-    api_modules = set()
-    model_modules = set()
-
-    for path in list(spec['paths'].values()):
-        for op_name in list(path.keys()):
-            if op_name != 'parameters':
-                op = path[op_name]
-                for tag in op.get('tags', []):
-                    tag = '_'.join([string_utils.camel_case_to_snake(x) for x in tag.split('_')])
-                    api_modules.add(tag + '_api')
-
-    for model in list(spec['definitions'].keys()):
-        module_name = '_'.join([string_utils.camel_case_to_snake(x) for x in model.split('.')])
-        model_modules.add(module_name)
-
-    for api_module in api_modules:
-        suffix = api_module.split('_')[-1]
-        if suffix in ['0', 'pre012'] or api_module in k8s_apis:
-            ignore_lines.add('client/apis/{}.py'.format(api_module))
-            print("Skipping generation of client/apis/{}.py".format(api_module))
-        else:
-            print("Not skipping generation of client/apis/{}.py".format(api_module))
-
-    for model_module in model_modules:
-        if model_module in k8s_models:
-            ignore_lines.add('client/models/{}.py'.format(model_module))
-            print("Skipping generation of client/models/{}.py".format(model_module))
-        else:
-            print("Not skipping generation of client/models/{}.py".format(model_module))
-
-    for module in list(ignore_lines):
-      module_name = module.split('/')[-1].split('.')[0]
-      test_module_name = 'test_{}'.format(module_name)
-      docs_module_name = "".join(map(lambda x: x.capitalize(), module_name.split('_')))
-      ignore_lines.add("test/{}.py".format(test_module_name))
-      ignore_lines.add('docs/{}.md'.format(docs_module_name))
-      print("Skipping generation of test/{}.py".format(test_module_name))
-      print("Skipping generation of docs/{}.md".format(docs_module_name))
-
     ignore_lines = ignore_lines.union(DEFAULT_CODEGEN_IGNORE_LINES)
 
     with open(codegen_ignore_path, 'w') as f:
@@ -101,13 +57,6 @@ def process_openshift_swagger(spec, output_path):
 
     return spec
 
-
-def rename_model(spec, old_name, new_name):
-    find_rename_ref_recursive(spec,
-                              "#/definitions/" + old_name,
-                              "#/definitions/" + new_name)
-    spec['definitions'][new_name] = spec['definitions'][old_name]
-    del spec['definitions'][old_name]
 
 def apply_func_to_openshift_spec_operations(spec, func, **kwargs):
     """Apply func to each operation in the spec.
@@ -138,8 +87,8 @@ def openshift_main():
     pool = urllib3.PoolManager()
     reader = codecs.getreader('utf-8')
     spec_url = 'https://raw.githubusercontent.com/openshift/origin/' \
-               '%s/api/swagger-spec/openshift-openapi-spec.json' % sys.argv[1]
-    output_path = sys.argv[2]
+               '%s/api/swagger-spec/openshift-openapi-spec.json' % sys.argv[2]
+    output_path = sys.argv[3]
     print("writing to {}".format(output_path))
 
     with pool.request('GET', spec_url, preload_content=False) as response:
@@ -147,7 +96,7 @@ def openshift_main():
             print("Error downloading spec file. Reason: %s" % response.reason)
             return 1
         in_spec = json.load(reader(response), object_pairs_hook=OrderedDict)
-        out_spec = process_swagger(process_openshift_swagger(in_spec, output_path))
+        out_spec = process_swagger(process_openshift_swagger(in_spec, output_path), sys.argv[1])
         update_codegen_ignore(out_spec, output_path)
         with open(output_path, 'w') as out:
             json.dump(out_spec, out, sort_keys=True, indent=2,
