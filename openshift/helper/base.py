@@ -180,6 +180,7 @@ class BaseObjectHelper(object):
         try:
             try:
                 get_method = self.lookup_method(method_name)
+                namespace = None # In the case we find a non-namespaced method
             except KubernetesException:
                 get_method = self.lookup_method(method_name, namespace)
 
