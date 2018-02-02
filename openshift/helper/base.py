@@ -178,7 +178,11 @@ class BaseObjectHelper(object):
         k8s_obj = None
         method_name = 'list' if self.kind.endswith('list') else 'read'
         try:
-            get_method = self.lookup_method(method_name, namespace)
+            try:
+                get_method = self.lookup_method(method_name)
+            except KubernetesException:
+                get_method = self.lookup_method(method_name, namespace)
+
             if name is None and namespace is None:
                 k8s_obj = get_method()
             elif name and namespace is None:
